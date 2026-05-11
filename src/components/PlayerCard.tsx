@@ -5,9 +5,10 @@ interface PlayerCardProps {
   score: number;
   currentThrows: number[];
   isActive: boolean; 
+  sum: number;
 }
 
-export default function PlayerCard({ name, score, currentThrows, isActive }: PlayerCardProps) {
+export default function PlayerCard({ name, score, currentThrows, isActive, sum }: PlayerCardProps) {
   return (
     <View style={[
       styles.playerCard, 
@@ -34,7 +35,7 @@ export default function PlayerCard({ name, score, currentThrows, isActive }: Pla
             <Text style={styles.throwText}>{currentThrows[2]}</Text> 
           </View>
         </View>
-        <Text style={styles.sum}>0</Text>
+        <Text style={styles.sum}>{sum}</Text>
       </View>
       
       <View style={styles.rightColumn}>
