@@ -6,9 +6,14 @@ interface PlayerCardProps {
   currentThrows: number[];
   isActive: boolean; 
   sum: number;
+  leg: number;
+  set: number;
+  matchPoints: number;
+  matchDarts: number;
 }
 
-export default function PlayerCard({ name, score, currentThrows, isActive, sum }: PlayerCardProps) {
+export default function PlayerCard({ name, score, currentThrows, isActive, sum, leg, set, matchDarts, matchPoints}: PlayerCardProps) {
+  const average = matchDarts === 0 ? 0 : (matchPoints / matchDarts) * 3;
   return (
     <View style={[
       styles.playerCard, 
@@ -39,8 +44,8 @@ export default function PlayerCard({ name, score, currentThrows, isActive, sum }
       </View>
       
       <View style={styles.rightColumn}>
-        <Text style={styles.rightColumnContainings}>Średnia: 0.0</Text>
-        <Text style={styles.rightColumnContainings}>Sety: 0 Legi: 0</Text>
+        <Text style={styles.rightColumnContainings}>Średnia: {average.toFixed(2)}</Text>
+        <Text style={styles.rightColumnContainings}>Sety: {set} Legi: {leg}</Text>
       </View>
       
     </View>
