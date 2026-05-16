@@ -69,7 +69,7 @@ export default function GameScreen() {
 
       const newScores = [...scores];
       newScores[activePlayerIndex] -= actualPoints;
-      if (newScores[activePlayerIndex] === 0) {
+      if (newScores[activePlayerIndex] === 0 && multiplier === 2) {
           setScores(newScores);
           const newLegs = [...legs];
           newLegs[activePlayerIndex] += 1;
@@ -86,7 +86,7 @@ export default function GameScreen() {
             }
           return;
       }
-      else if(newScores[activePlayerIndex] < 0 || newScores[activePlayerIndex] ===1 ){
+      else if(newScores[activePlayerIndex] === 1 || newScores[activePlayerIndex] < 0 ||(newScores[activePlayerIndex] === 0 && multiplier !== 2) ){
           const revertedScores = [...scores];
           revertedScores[activePlayerIndex] = scores[activePlayerIndex] + roundSums[activePlayerIndex];
           setScores(revertedScores);
@@ -182,15 +182,19 @@ export default function GameScreen() {
       </ScrollView>
       
       <View style={{flexDirection: 'row', flexWrap: 'wrap',justifyContent: 'space-around', padding: 20, backgroundColor: '#ebe7e7' }}>
-            {BUTTON_VALUES.map((points) =>(
+            {BUTTON_VALUES.map((points) =>{
+              if (multiplier === 3 && points == 25){
+                return null;
+              }
+              return(
               <TouchableOpacity
                 key={points}
                 onPress={() => handleAddThrow(points)} 
                 style={{margin: 1, padding: 15, backgroundColor: 'orange', borderRadius: 8 }}>
                 <Text style={{ color: 'white', fontWeight: 'bold' }}>{points}</Text>
             </TouchableOpacity>
-          )
-            )
+          );
+        })
           }
             <View style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#ebe7e7', paddingBottom: 15 }}>
           
