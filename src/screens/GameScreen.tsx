@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import { act, useState } from 'react';
 import PlayerCard from '../components/ui/PlayerCard';
+import {checkoutAlgorithm} from '../components/ui/checkoutAlgorithm';
 
 const PLAYERS = ['Gracz 1', 'Gracz 2', 'Gracz 3'];
-const STARTING_SCORE = 60;
+const STARTING_SCORE = 201;
 const BUTTON_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 0]; 
 interface GameSnapshot {
   scores: number[];
@@ -37,6 +38,8 @@ export default function GameScreen() {
     const [matchPoints, setMatchPoints] = useState<number[]>(Array(PLAYERS.length).fill(0));
     const [matchDarts, setMatchDarts] = useState<number[]>(Array(PLAYERS.length).fill(0));
     const [multiplier, setMultiplier] = useState(1);
+
+    const suggestedCheckout = checkoutAlgorithm(scores[activePlayerIndex]);
 
     const handleAddThrow = (points: number) => {
     if (roundThrows[activePlayerIndex].length < 3) { //liczba rzutow
@@ -180,13 +183,21 @@ export default function GameScreen() {
   );
 })}
       </ScrollView>
-      
+      <View style={{ alignItems: 'center', paddingVertical: 15, backgroundColor: '#1e1e1e' }}>
+          <Text style={{ color: 'gray', fontSize: 14, textTransform: 'uppercase', letterSpacing: 1 }}>
+              Sugerowane zejście
+          </Text>
+          <Text style={{ color: '#4ade80', fontSize: 28, fontWeight: 'bold', marginTop: 5 }}>
+              {suggestedCheckout ? suggestedCheckout.join('  ➔  ') : '---'}
+          </Text>
+      </View>
       <View style={{flexDirection: 'row', flexWrap: 'wrap',justifyContent: 'space-around', padding: 20, backgroundColor: '#ebe7e7' }}>
             {BUTTON_VALUES.map((points) =>{
               if (multiplier === 3 && points == 25){
                 return null;
               }
               return(
+              
               <TouchableOpacity
                 key={points}
                 onPress={() => handleAddThrow(points)} 
