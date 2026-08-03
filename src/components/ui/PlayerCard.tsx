@@ -4,7 +4,7 @@ interface PlayerCardProps {
   name: string;
   score: number;
   currentThrows: number[];
-  isActive: boolean; 
+  isActive: boolean;
   sum: number;
   leg: number;
   set: number;
@@ -12,42 +12,40 @@ interface PlayerCardProps {
   matchDarts: number;
 }
 
-export default function PlayerCard({ name, score, currentThrows, isActive, sum, leg, set, matchDarts, matchPoints}: PlayerCardProps) {
+export default function PlayerCard({ name, score, currentThrows, isActive, sum, leg, set, matchDarts, matchPoints }: PlayerCardProps) {
   const average = matchDarts === 0 ? 0 : (matchPoints / matchDarts) * 3;
   return (
     <View style={[
-      styles.playerCard, 
-      { 
-        borderLeftWidth: 8, 
-        borderLeftColor: isActive ? '#4ade80' : 'transparent' 
+      styles.playerCard,
+      {
+        borderLeftWidth: 8,
+        borderLeftColor: isActive ? '#4ade80' : 'transparent'
       }
     ]}>
-      
+
       <View style={styles.leftColumn}>
         <Text style={styles.points}>{score}</Text>
         <Text style={styles.playerName}>{name}</Text>
       </View>
-      
+
       <View style={styles.middleColumn}>
         <View style={styles.inputsRow}>
-          <View style={styles.input}>
-            <Text style={styles.throwText}>{currentThrows[0]}</Text> 
-          </View>
-          <View style={styles.input}>
-            <Text style={styles.throwText}>{currentThrows[1]}</Text> 
-          </View>
-          <View style={styles.input}>
-            <Text style={styles.throwText}>{currentThrows[2]}</Text> 
-          </View>
+          {[0, 1, 2].map((index) => (
+            <View key={index} style={styles.input}>
+              <Text style={styles.throwText}>
+                {currentThrows[index]}
+              </Text>
+            </View>
+          ))}
         </View>
         <Text style={styles.sum}>{sum}</Text>
       </View>
-      
+
       <View style={styles.rightColumn}>
         <Text style={styles.rightColumnContainings}>Średnia: {average.toFixed(2)}</Text>
         <Text style={styles.rightColumnContainings}>Sety: {set} Legi: {leg}</Text>
       </View>
-      
+
     </View>
   );
 }
@@ -59,14 +57,13 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     borderRadius: 10,
-    elevation: 5, 
+    elevation: 5,
     flexDirection: 'row',
-    paddingBottom: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 5,
   },
-  leftColumn: {  
+  leftColumn: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -90,14 +87,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 5,
   },
-  sum:{
+  sum: {
     fontSize: 18,
     color: '#666',
     textAlign: 'center',
     marginBottom: 10,
   },
   inputsRow: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 10,
   },
@@ -109,7 +106,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginHorizontal: 5,
     // Dodano wyśrodkowanie tekstu wewnątrz kwadratu w pionie
-    justifyContent: 'center', 
+    justifyContent: 'center',
     backgroundColor: '#fafafa',
   },
   throwText: {
